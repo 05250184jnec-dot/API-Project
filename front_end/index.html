@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task Manager</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="app-header">
+      <h1>Task Manager</h1>
+      <p class="subtitle">Keep track of what you need to do.</p>
+    </header>
+
+    <form id="add-form" class="add-form" autocomplete="off">
+      <input
+        id="task-input"
+        type="text"
+        placeholder="What needs to be done?"
+        maxlength="255"
+        aria-label="Task title"
+      />
+      <button type="submit" class="btn btn-primary">Add Task</button>
+    </form>
+
+    <p id="message" class="message" role="status" aria-live="polite"></p>
+
+    <section class="counter" id="counter" hidden>
+      <span>Total: <strong id="total-count">0</strong></span>
+      <span>Completed: <strong id="completed-count">0</strong></span>
+    </section>
+
+    <ul id="task-list" class="task-list"></ul>
+
+    <div id="loading" class="loading" hidden>Loading tasks…</div>
+
+    <div id="empty-state" class="empty-state" hidden>
+      <p>No tasks yet. Add your first task above!</p>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
