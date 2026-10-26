@@ -3,42 +3,145 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Task Manager</title>
+  <title>TaskFlow Dashboard</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="app">
-    <header class="app-header">
-      <h1>Task Manager</h1>
-      <p class="subtitle">Keep track of what you need to do.</p>
-    </header>
+  <div class="layout">
 
-    <form id="add-form" class="add-form" autocomplete="off">
-      <input
-        id="task-input"
-        type="text"
-        placeholder="What needs to be done?"
-        maxlength="255"
-        aria-label="Task title"
-      />
-      <button type="submit" class="btn btn-primary">Add Task</button>
-    </form>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="logo">✓</span>
+        <span>TaskFlow</span>
+      </div>
 
-    <p id="message" class="message" role="status" aria-live="polite"></p>
+      <nav class="nav" id="nav">
+        <button class="nav-item active" data-filter="all">
+          <span>All tasks</span>
+          <span class="badge" id="badge-all">0</span>
+        </button>
+        <button class="nav-item" data-filter="active">
+          <span>In progress</span>
+          <span class="badge" id="badge-active">0</span>
+        </button>
+        <button class="nav-item" data-filter="done">
+          <span>Completed</span>
+          <span class="badge" id="badge-done">0</span>
+        </button>
+      </nav>
 
-    <section class="counter" id="counter" hidden>
-      <span>Total: <strong id="total-count">0</strong></span>
-      <span>Completed: <strong id="completed-count">0</strong></span>
-    </section>
+      <div class="sidebar-footer">
+        <p class="footer-text" id="footer-text">Small steps add up.</p>
+      </div>
+    </aside>
 
-    <ul id="task-list" class="task-list"></ul>
+    <!-- Main -->
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <p class="date" id="today"></p>
+          <h1 id="greeting">Welcome back</h1>
+        </div>
+        <input id="search" class="search" type="search" placeholder="Search tasks…" aria-label="Search tasks" />
+      </header>
 
-    <div id="loading" class="loading" hidden>Loading tasks…</div>
+      <!-- Stat cards -->
+      <section class="stats">
+        <article class="card stat">
+          <span class="stat-icon">📋</span>
+          <div>
+            <p class="stat-label">Total tasks</p>
+            <p class="stat-value" id="stat-total">0</p>
+          </div>
+        </article>
+        <article class="card stat">
+          <span class="stat-icon">✅</span>
+          <div>
+            <p class="stat-label">Completed</p>
+            <p class="stat-value" id="stat-done">0</p>
+          </div>
+        </article>
+        <article class="card stat">
+          <span class="stat-icon">⏳</span>
+          <div>
+            <p class="stat-label">Remaining</p>
+            <p class="stat-value" id="stat-left">0</p>
+          </div>
+        </article>
+        <article class="card stat">
+          <span class="stat-icon">📈</span>
+          <div>
+            <p class="stat-label">Completion</p>
+            <p class="stat-value" id="stat-rate">0%</p>
+          </div>
+        </article>
+      </section>
 
-    <div id="empty-state" class="empty-state" hidden>
-      <p>No tasks yet. Add your first task above!</p>
-    </div>
-  </main>
+      <!-- Progress + Up next -->
+      <section class="grid-2">
+        <article class="card progress-card">
+          <h2 class="card-title">Overall progress</h2>
+          <div class="ring-wrap">
+            <svg class="ring" viewBox="0 0 120 120" aria-hidden="true">
+              <circle class="ring-bg" cx="60" cy="60" r="52" />
+              <circle class="ring-fill" id="ring-fill" cx="60" cy="60" r="52" />
+            </svg>
+            <div class="ring-text">
+              <span id="ring-percent">0%</span>
+              <small id="ring-caption">0 of 0 done</small>
+            </div>
+          </div>
+        </article>
+
+        <article class="card next-card">
+          <h2 class="card-title">Up next</h2>
+          <div id="next-body">
+            <p class="next-title" id="next-title">Nothing queued</p>
+            <p class="muted" id="next-hint">Add a task to see what's next.</p>
+          </div>
+          <button class="btn btn-primary" id="next-done" hidden>Mark as done</button>
+        </article>
+      </section>
+
+      <!-- Task board -->
+      <section class="card board">
+        <div class="board-head">
+          <div>
+            <h2 class="card-title">Tasks</h2>
+            <p class="muted small" id="showing">Showing all tasks</p>
+          </div>
+        </div>
+
+        <form id="add-form" class="add-form" autocomplete="off">
+          <input
+            id="task-input"
+            type="text"
+            placeholder="Add a new task and press Enter…"
+            maxlength="255"
+            aria-label="Task title"
+          />
+          <button type="submit" class="btn btn-primary">+ Add</button>
+        </form>
+
+        <div id="loading" class="skeleton-wrap" hidden>
+          <div class="skeleton"></div>
+          <div class="skeleton"></div>
+          <div class="skeleton"></div>
+        </div>
+
+        <ul id="task-list" class="task-list"></ul>
+
+        <div id="empty-state" class="empty-state" hidden>
+          <div class="empty-icon">🌱</div>
+          <h3 id="empty-title">Your list is empty</h3>
+          <p id="empty-text">Add your first task above and let's get moving.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toasts" class="toasts" aria-live="polite"></div>
 
   <script src="script.js"></script>
 </body>
